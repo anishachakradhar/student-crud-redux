@@ -1,0 +1,33 @@
+.home {
+  background-color: #f7f7f7;
+  width: 50%;
+  margin: 50px auto;
+}
+
+#home-button {
+  width: 100%;
+  margin: 0px;
+  background-color: rgb(240, 240, 240);
+  border: rgb(192, 192, 192) 1px solid;
+  color: black;
+  border-radius: 0px;
+}
+
+#home-button:hover {
+  background-color: rgb(192, 192, 192);
+}
+
+#home-col-right {
+  padding-right: 0px;
+}
+
+#home-col-left {
+  padding-left: 0px;
+}
+
+.student-form {
+  width: 70%;
+  margin: 0px auto;
+  background-color: #f7f7f7;
+  padding: 2rem;
+}
