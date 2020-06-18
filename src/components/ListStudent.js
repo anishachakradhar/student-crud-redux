@@ -1,8 +1,34 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import AddStudent from './AddStudent';
+import { deleteStudent } from '../reducers/studentReducers';
+
 class ListStudent extends Component {
+  constructor(props) {
+    super(props);
+    console.log(props.actions);
+    this.state = {
+      indexToUpdate: null,
+      student: {}
+    }
+  }
+
+  handleEdit = (indexToUpdate) => {
+    const student = this.props.students[indexToUpdate]
+    this.setState({
+      student,
+      indexToUpdate
+    })
+  }
+
+  handleDelete = (index) => {
+    this.props.actions.deleteStudent(index);
+  }
+
   render() {
     return (
       <div>
@@ -26,12 +52,15 @@ class ListStudent extends Component {
                 <td>{student.address}</td>
                 <td>{student.faculty}</td>
                 <td>{student.year}</td>
-                <td><Button>Edit</Button></td>
-                <td><Button variant="danger">Delete</Button></td>
+                <td><Button onClick={() => this.handleEdit(index)}>Edit</Button></td>
+                <td><Button variant="danger" onClick={() => this.handleDelete(index)}>Delete</Button></td>
               </tr>
             )}
           </tbody>
         </Table> 
+        {this.state.indexToUpdate != null &&
+          <AddStudent indexToUpdate={this.state.indexToUpdate} student={this.state.student} />
+        }
       </div>
     )
   }
@@ -47,4 +76,12 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ListStudent);
+function mapActionToProps(dispatch) {
+  return {
+    actions: bindActionCreators({
+      deleteStudent
+    }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapActionToProps)(ListStudent);

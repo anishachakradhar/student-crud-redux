@@ -10,6 +10,7 @@ class AddStudent extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       student: {
         name: '',
