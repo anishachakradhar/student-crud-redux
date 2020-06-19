@@ -10,13 +10,13 @@ class AddStudent extends Component {
 
   constructor(props) {
     super(props);
-    console.log(props);
+    const student = props.student || {};
     this.state = {
       student: {
-        name: '',
-        address: '',
-        faculty: '',
-        year: ''
+        name      : student.name || '',
+        address   : student.address || '',
+        faculty   : student.faculty || '',
+        year      : student.year || ''
       }
     }
   }
