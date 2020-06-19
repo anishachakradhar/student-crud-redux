@@ -16,6 +16,7 @@ export default class Home extends Component {
         </Row>
         <Switch>
           <Route path="/add-student" component={ AddStudent } />
+          <Route path="/edit-student/:id" component={ AddStudent } />
           <Route path="/list-student" component={ ListStudent} />
         </Switch>
       </div>

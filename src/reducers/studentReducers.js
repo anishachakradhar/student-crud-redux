@@ -9,11 +9,15 @@ export default function studentReducer(state = initialState, action) {
         ...state,
         students: state.students.concat([action.studentInfo])
       } 
-    // case 'EDIT_STUDENT':
-    //   console.log([action.studentIndex]);
-    //   return {
-    //     ...state
-    //   }
+    case 'EDIT_STUDENT':
+      {
+        const students = [].concat(state.students);
+        students[action.studentIndex] = action.payload;
+        return {
+          ...state,
+          students
+        }
+      }
     case 'DELETE_STUDENT':
       return {
         students: state.students.filter((student, i) => i !== action.index )
@@ -30,10 +34,11 @@ export function addStudent(studentInfo) {
   }
 }
 
-export function editStudent(studentIndex) {
+export function editStudent(studentIndex, payload) {
   return {
     type: 'EDIT_STUDENT',
-    studentIndex
+    studentIndex,
+    payload
   }
 }
 

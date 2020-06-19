@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import AddStudent from './AddStudent';
 import { deleteStudent } from '../reducers/studentReducers';
 
 class ListStudent extends Component {
   constructor(props) {
     super(props);
-    console.log(props.actions);
     this.state = {
       indexToUpdate: null,
       student: {}
@@ -52,15 +51,12 @@ class ListStudent extends Component {
                 <td>{student.address}</td>
                 <td>{student.faculty}</td>
                 <td>{student.year}</td>
-                <td><Button onClick={() => this.handleEdit(index)}>Edit</Button></td>
+                <td><Button as={Link} to={`/edit-student/${index}`}>Edit</Button></td>
                 <td><Button variant="danger" onClick={() => this.handleDelete(index)}>Delete</Button></td>
               </tr>
             )}
           </tbody>
         </Table> 
-        {this.state.indexToUpdate != null &&
-          <AddStudent indexToUpdate={this.state.indexToUpdate} student={this.state.student} />
-        }
       </div>
     )
   }

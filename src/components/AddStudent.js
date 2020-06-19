@@ -4,14 +4,18 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addStudent } from '../reducers/studentReducers';
+import { addStudent, editStudent } from '../reducers/studentReducers';
 
 class AddStudent extends Component {
 
   constructor(props) {
     super(props);
-    const student = props.student || {};
+    const updateIndex = parseInt(props.match.params.id, 10);
+    const student = updateIndex >= 0 && (props.students[updateIndex] || {});
+
     this.state = {
+      updateIndex,
+      isUpdate: updateIndex >= 0,
       student: {
         name      : student.name || '',
         address   : student.address || '',
@@ -32,7 +36,12 @@ class AddStudent extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.actions.addStudent(this.state.student);
+    const { actions } = this.props;
+    if (this.state.isUpdate) {
+      actions.editStudent(this.state.updateIndex, this.state.student);
+    } else {
+      actions.addStudent(this.state.student);
+    }
     this.setState({
       student: {
         name: '',
@@ -89,13 +98,16 @@ class AddStudent extends Component {
 }
 
 function mapStateToProps(state) {
-  return {}
+  return {
+    students: state.student.students
+  }
 }
 
 function mapActionToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      addStudent
+      addStudent,
+      editStudent
     }, dispatch)
   }
 }
